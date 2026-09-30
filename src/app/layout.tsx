@@ -1,5 +1,10 @@
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+
+import { Header } from '@/components/header';
+import { getNavTree } from '@/components/sidebar/get-nav-tree';
+import { Sidebar } from '@/components/sidebar/sidebar';
+
 import './globals.css';
 
 const geistSans = Geist({
@@ -32,7 +37,10 @@ export const viewport: Viewport = {
   ],
 };
 
-const RootLayout = ({ children }: LayoutProps<'/'>) => {
+const RootLayout = async ({ children }: LayoutProps<'/'>) => {
+  // Read from the folder structure at build time, so new topic folders show up automatically.
+  const navItems = await getNavTree();
+
   return (
     <html
       lang="en"
@@ -44,7 +52,15 @@ const RootLayout = ({ children }: LayoutProps<'/'>) => {
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="bg-background text-foreground flex min-h-full flex-col font-sans">
-        {children}
+        <Header />
+        <div className="flex flex-1 flex-col lg:flex-row">
+          <Sidebar items={navItems} />
+          <main className="flex min-w-0 flex-1 justify-center px-6 py-12">
+            <article className="prose dark:prose-invert prose-headings:scroll-mt-20 prose-pre:p-0 w-full max-w-3xl">
+              {children}
+            </article>
+          </main>
+        </div>
       </body>
     </html>
   );

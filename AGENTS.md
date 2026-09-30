@@ -50,3 +50,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 11. Every form control (`input`, `textarea`, `select`, `button`) must have:
     - a `name` attribute (kebab-case, describing the value, e.g. `name="search-query"`).
     - an accessible name via ARIA: `aria-label`, or `aria-labelledby` when a visible label element exists. Add state attributes where relevant, e.g. `aria-describedby` for help/error text, `aria-invalid`, `aria-required`, `aria-pressed`/`aria-expanded` for toggles.
+
+## Responsiveness
+
+12. The app must be responsive on every device, from mobile to 4K desktops. Make sure all components and pages stay responsive in all states (e.g. open/closed menus, expanded/collapsed sections, empty, loading and error states, long content).

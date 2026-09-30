@@ -3,11 +3,11 @@ import type { Metadata } from 'next';
 import Notes from './notes.md';
 
 export const metadata: Metadata = {
-  title: 'JavaScript | AI Engineering Notes',
+  title: 'Closures | JavaScript | AI Engineering Notes',
 };
 
-const JavascriptPage = () => {
+const ClosuresPage = () => {
   return <Notes />;
 };
 
-export default JavascriptPage;
+export default ClosuresPage;
