@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-
+import { Analytics } from '@vercel/analytics/next';
 import { Header } from '@/components/header';
 import { getNavTree } from '@/components/sidebar/get-nav-tree';
 import { Sidebar } from '@/components/sidebar/sidebar';
@@ -58,6 +58,7 @@ const RootLayout = async ({ children }: LayoutProps<'/'>) => {
           <main className="flex min-w-0 flex-1 justify-center px-6 py-12">
             <article className="prose dark:prose-invert prose-headings:scroll-mt-20 prose-pre:p-0 w-full max-w-3xl">
               {children}
+              <Analytics />
             </article>
           </main>
         </div>
