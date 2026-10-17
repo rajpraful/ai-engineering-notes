@@ -27,7 +27,7 @@ const themeScript = `(function(){try{
 export const metadata: Metadata = {
   title: 'AI Engineering Notes',
   description:
-    "AI enginnering notes created by Praful Raj (Senior AI Engineer). This is the notes created along with the jorney of upgrading from Senior Frontend Engineer to AI Engineer. This notes is divided into different categories according to topics. Each topic contains it's individual note via url. This is created for teaching public, it's intention is to have a personal notes which will be helpfull to revise, define and remember important terminologies, topics, logics and ways",
+    "AI engineering notes created by Praful Raj (Senior Software Engineer). This is the notes created along with the journey of upgrading from Senior Frontend Engineer to AI Engineer. This notes is divided into different categories according to topics. Each topic contains it's individual note via url. This is created for teaching public, it's intention is to have a personal notes which will be helpful to revise, define and remember important terminologies, topics, logics and ways",
 };
 
 export const viewport: Viewport = {
@@ -56,7 +56,7 @@ const RootLayout = async ({ children }: LayoutProps<'/'>) => {
         <div className="flex flex-1 flex-col lg:flex-row">
           <Sidebar items={navItems} />
           <main className="flex min-w-0 flex-1 justify-center px-6 py-12">
-            <article className="prose dark:prose-invert prose-headings:scroll-mt-20 prose-pre:p-0 w-full max-w-3xl">
+            <article className="prose dark:prose-invert prose-pre:p-0 w-full max-w-3xl">
               {children}
               <Analytics />
             </article>

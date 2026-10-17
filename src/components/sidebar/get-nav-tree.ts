@@ -4,6 +4,7 @@ import path from 'node:path';
 
 export type NavItem = {
   title: string;
+  summary?: string;
   href: string;
   hasPage: boolean;
   children: NavItem[];
@@ -30,14 +31,28 @@ const hasPageFile = async (dir: string) => {
   }
 };
 
+// Drops inline markdown (emphasis, code, links) so the text reads as plain prose.
+const toPlainText = (markdown: string) =>
+  markdown
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/[`*_]/g, '')
+    .trim();
+
 // The note's first `# Heading` is its sidebar label; the folder name is the fallback.
-const readTitle = async (dir: string, slug: string) => {
+// The paragraph right under it, when there is one, is the topic's one-line summary.
+const readNoteMeta = async (dir: string, slug: string) => {
   try {
     const markdown = await readFile(path.join(dir, 'notes.md'), 'utf8');
-    const heading = markdown.match(/^#\s+(.+)$/m)?.[1];
-    return heading ? heading.replace(/[`*_]/g, '').trim() : toTitleCase(slug);
+    // Skips headings, lists, tables, images, quotes and code fences: those aren't a summary.
+    const match = markdown.match(/^#\s+(.+)$\s*^((?!```)[^#\-|!>\s].*)?$/m);
+    const heading = match?.[1];
+    const paragraph = match?.[2];
+    return {
+      title: heading ? toPlainText(heading) : toTitleCase(slug),
+      summary: paragraph ? toPlainText(paragraph) : undefined,
+    };
   } catch {
-    return toTitleCase(slug);
+    return { title: toTitleCase(slug), summary: undefined };
   }
 };
 
@@ -51,12 +66,12 @@ const readNavItems = async (dir: string, baseHref: string): Promise<NavItem[]> =
   const toNavItem = async (entry: Dirent): Promise<NavItem> => {
     const folderPath = path.join(dir, entry.name);
     const href = `${baseHref}/${entry.name}`;
-    const [title, hasPage, children] = await Promise.all([
-      readTitle(folderPath, entry.name),
+    const [{ title, summary }, hasPage, children] = await Promise.all([
+      readNoteMeta(folderPath, entry.name),
       hasPageFile(folderPath),
       readNavItems(folderPath, href),
     ]);
-    return { title, href, hasPage, children };
+    return { title, summary, href, hasPage, children };
   };
 
   const items = await Promise.all(entries.filter(isTopicFolder).map(toNavItem));

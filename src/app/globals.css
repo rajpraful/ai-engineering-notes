@@ -11,7 +11,13 @@
   --muted-foreground: #71717a;
   --border: #e4e4e7;
   --accent: #2563eb;
+  /* Sticky header height; the sidebar and anchor offsets sit below it. */
+  --header-height: 4.5rem;
   color-scheme: light;
+}
+
+html {
+  scroll-padding-top: calc(var(--header-height) + 1rem);
 }
 
 .dark {
@@ -62,11 +68,12 @@ body {
   padding-inline: 1rem;
 }
 
+/* Plain `text` blocks get no Shiki vars, so fall back to the theme foreground. */
 [data-rehype-pretty-code-figure] :is(code, span) {
-  color: var(--shiki-light);
+  color: var(--shiki-light, var(--foreground));
 }
 
 /* Follow the `.dark` class set by the theme toggle, not the OS preference. */
 .dark [data-rehype-pretty-code-figure] :is(code, span) {
-  color: var(--shiki-dark);
+  color: var(--shiki-dark, var(--foreground));
 }

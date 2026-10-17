@@ -111,7 +111,7 @@ export const Sidebar = ({ items }: SidebarProps) => {
   };
 
   return (
-    <aside className="border-border lg:sticky lg:top-0 lg:h-dvh lg:w-72 lg:shrink-0 lg:overflow-y-auto lg:border-r">
+    <aside className="border-border lg:sticky lg:top-(--header-height) lg:h-[calc(100dvh-var(--header-height))] lg:w-72 lg:shrink-0 lg:overflow-y-auto lg:border-r">
       <button
         type="button"
         name="toggle-sidebar"

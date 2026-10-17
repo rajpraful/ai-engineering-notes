@@ -7,7 +7,7 @@ import { ThemeToggle } from '@/components/theme-toggle';
 
 export const Header = () => {
   return (
-    <header className="bg-muted flex w-full items-center gap-4 px-6 py-4">
+    <header className="bg-muted border-border sticky top-0 z-20 flex h-(--header-height) w-full shrink-0 items-center gap-4 border-b px-6">
       <Link href="/" aria-label="AI Engineering Notes home" className="shrink-0">
         <Image src={logo} alt="" width={40} height={40} loading="eager" className="rounded-xl" />
       </Link>
